@@ -1,6 +1,10 @@
-```python
 from fastapi import FastAPI
 from app.api import items
+from app.db import Base, engine
+from app import models
+
+# Create DB tables on startup (demo style)
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="FastAPI Backend Template",
@@ -14,5 +18,5 @@ def health():
     return {"status": "ok"}
 
 
-# Include routers
 app.include_router(items.router, prefix="/items", tags=["items"])
+
